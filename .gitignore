@@ -1,0 +1,47 @@
+# (Antes aquí se ignoraba "site/" por ser la plantilla; ahora SÍ se sube: es la web. Lo sensible, node_modules
+# y .next ya se ignoran en site/.gitignore.)
+build/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vercel
+.vercel/
+
+# Next.js (inside site/)
+.next/
+out/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Playwright
+playwright-cli-screenshots/
+*.png
+!docs/**/*.png
+
+# Written by the improve-animations / prototype skills
+plans/
+prototypes/
+
+# Python bytecode from bundled skills
+__pycache__/
+*.pyc
