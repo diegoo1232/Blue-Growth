@@ -15,6 +15,10 @@ import { useEffect, useRef, useState } from "react";
 import { blanqueo, progresoEscena } from "./blanqueo";
 import { acumular, control2, control3, EVENTO_SINCRONIZAR, intencionMinima, modoSalto, salida2 } from "./estado-telefonos";
 import { GaleriaDisenos } from "./galeria-disenos";
+import { PilaDisenos } from "./pila-disenos";
+
+// La pila se detiene mientras la tablet de la escena está fuera
+const pausarPila = () => salida2.get() > 0.99;
 import { Phone } from "./phone";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -443,7 +447,10 @@ export function EscenaTelefono() {
               style={{ maskImage: cortina, WebkitMaskImage: cortina }}
               className="absolute inset-0 bg-azul"
               aria-hidden
-            />
+            >
+              {/* pila descendente con las portadas de los últimos seis diseños (solo escritorio) */}
+              <PilaDisenos pausaSi={pausarPila} />
+            </motion.div>
           </Phone>
           </motion.div>
         </motion.div>
@@ -459,7 +466,7 @@ export function EscenaTelefono() {
         <motion.p
           ref={textoRef}
           style={{ opacity: opacidadTexto, y: subeTexto, ...(dispMovil ? { top: dispMovil.texto } : {}) }}
-          className="pointer-events-none absolute left-6 right-[58%] top-[56%] z-10 font-serif text-[12px] italic leading-snug text-gris md:right-auto md:top-auto md:bottom-[15%] md:left-[6%] md:w-[min(40%,440px)] md:text-[19px] md:leading-snug"
+          className="pointer-events-none absolute left-6 right-[58%] top-[56%] z-10 font-serif text-[12px] leading-snug text-gris md:right-auto md:top-auto md:bottom-[15%] md:left-[6%] md:w-[min(40%,440px)] md:text-[19px] md:leading-snug"
         >
           Texto de relleno: aquí irá la explicación de esta sección. Más adelante me dirás qué poner. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </motion.p>

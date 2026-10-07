@@ -409,7 +409,7 @@ export function Formulario({ compacto = false, columnas = false }: { compacto?: 
           <h3 className="mt-6 text-[26px] font-extrabold leading-tight tracking-[-0.035em] text-white">
             ¡Gracias, {d.nombre.trim().split(" ")[0]}!
           </h3>
-          <p className="mt-3 max-w-[320px] font-serif text-[16px] italic leading-relaxed text-white">
+          <p className="mt-3 max-w-[320px] font-serif text-[16px] leading-relaxed text-white">
             Hemos recibido tus datos. Nuestro equipo se pondrá en contacto contigo para agendar la reunión.
           </p>
           <button
@@ -607,7 +607,7 @@ export function Formulario({ compacto = false, columnas = false }: { compacto?: 
             Enviar
           </button>
 
-          <p className="font-serif text-[14px] italic leading-snug text-white max-md:text-[13px]">
+          <p className="font-serif text-[14px] leading-snug text-white max-md:text-[13px]">
             Nuestro equipo analizará tu caso y se pondrá en contacto contigo para presentarte una propuesta clara.
           </p>
           </div>

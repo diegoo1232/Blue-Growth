@@ -1,22 +1,26 @@
-// Logotipo provisional: brote de dos hojas dentro de un cuadrado azul.
-export function Logo({ className = "" }: { className?: string }) {
+// Logotipo oficial de Blue Growth, vectorizado a partir del original (public/marca/). Se pinta con CSS "máscara":
+// toma el color del texto de donde se use (blanco sobre el azul, oscuro sobre el blanco), así que sirve para cualquier fondo.
+// `completo` añade la línea "VENEZUELA"; sin ella se ve solo el nombre (cabecera). `alto` es la altura en px del dibujo.
+export function Logo({ className = "", completo = false, alto }: { className?: string; completo?: boolean; alto?: number }) {
+  const ratio = completo ? 879 / 235 : 879 / 178;
+  const h = alto ?? (completo ? 58 : 22);
+  const archivo = completo ? "/marca/blue-growth-logo.svg" : "/marca/blue-growth-wordmark.svg";
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap ${className}`}
+      role="img"
+      aria-label={completo ? "Blue Growth Venezuela" : "Blue Growth"}
       data-slot-type="brand-name"
-    >
-      <svg viewBox="0 0 24 24" className="size-6" aria-hidden>
-        <rect width="24" height="24" rx="7" fill="var(--azul)" />
-        <path
-          d="M12 18v-6m0 0c0-3 2-5 5-5 0 3-2 5-5 5Zm0 1c0-2.4-1.6-4-4-4 0 2.4 1.6 4 4 4Z"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <span className="text-[13px] font-bold tracking-tight min-[360px]:text-[15px]">BLUE GROWTH</span>
-    </span>
+      className={`inline-block shrink-0 bg-current ${className}`}
+      style={{
+        height: h,
+        width: Math.round(h * ratio),
+        WebkitMaskImage: `url(${archivo})`,
+        maskImage: `url(${archivo})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskSize: "100% 100%",
+        maskSize: "100% 100%",
+      }}
+    />
   );
 }

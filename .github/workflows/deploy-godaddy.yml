@@ -1,0 +1,66 @@
+# Publicación automática en GoDaddy.
+# Cada vez que se sube un cambio a la rama "main", GitHub construye la web (archivos estáticos) y la envía por FTPS
+# a la carpeta public_html de GoDaddy. Las claves NO están aquí: viven en GitHub → Settings → Secrets and variables → Actions.
+name: Publicar en GoDaddy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "deploy/**"
+      - ".github/workflows/deploy-godaddy.yml"
+  workflow_dispatch: # también se puede lanzar a mano desde la pestaña Actions
+
+concurrency:
+  group: deploy-godaddy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Instalar dependencias (npm ci)
+        working-directory: site
+        run: npm ci
+
+      - name: Construir la web (EXPORTAR=1 npm run build)
+        working-directory: site
+        env:
+          EXPORTAR: "1"
+        run: npm run build
+
+      - name: Preparar los archivos para GoDaddy
+        run: |
+          cd site/.next-export
+          rm -f file.svg globe.svg next.svg vercel.svg window.svg
+          cp ../../deploy/htaccess.txt .htaccess
+          test -f index.html
+          echo "Archivos a subir: $(find . -type f | wc -l)"
+
+      - name: Enviar por FTPS a GoDaddy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.GODADDY_FTP_SERVER }}
+          username: ${{ secrets.GODADDY_FTP_USERNAME }}
+          password: ${{ secrets.GODADDY_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: site/.next-export/
+          # Carpeta del servidor. Por defecto public_html/. Si la cuenta FTP ya entra directamente en public_html,
+          # crea en GitHub la variable GODADDY_FTP_DIR con el valor ./ (Settings → Secrets and variables → Actions → Variables).
+          server-dir: ${{ vars.GODADDY_FTP_DIR || 'public_html/' }}

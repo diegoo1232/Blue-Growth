@@ -9,7 +9,7 @@ import land110 from "world-atlas/land-110m.json";
 // PERIODO segundos (el final enlaza con el principio, en bucle) y van apareciendo, con un pequeño rebote, señaladores de
 // ubicación rojos que se quedan un instante y desaparecen. Dibujado desde cero con datos de tierras de Natural Earth
 // (dominio público). Va centrado dentro de la pantalla de la tablet, sin fondo propio (se ve el azul de la tablet).
-// Solo se muestra en escritorio (la tablet); en móvil, donde hay teléfono, no se pinta.
+// Se ve en la tablet (escritorio) y en el teléfono (móvil): se adapta solo al tamaño de la pantalla.
 
 const PERIODO = 6.15; // segundos por vuelta completa
 // Longitud que queda al frente (centro del globo) en cada instante, medida sobre el vídeo de referencia: el giro no es
@@ -171,7 +171,7 @@ export function GloboMapa({ pausaSi }: { pausaSi?: () => boolean }) {
   }, [pausaSi]);
 
   return (
-    <div ref={caja} className="pointer-events-none absolute inset-0 hidden place-items-center md:grid" aria-hidden>
+    <div ref={caja} className="pointer-events-none absolute inset-0 grid place-items-center" aria-hidden>
       <canvas ref={lienzo} />
     </div>
   );

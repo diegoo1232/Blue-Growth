@@ -98,7 +98,7 @@ export function GaleriaDisenos({ avance, desfase }: { avance: MotionValue<number
       <motion.div style={{ opacity: opacidadTitulo }} className="pointer-events-none relative z-10 px-5 pt-[52px] max-md:pt-11 md:px-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">Portafolio</p>
         <h3 className="mt-1.5 text-[26px] font-extrabold leading-[1.05] tracking-[-0.035em]">Nuestros últimos diseños</h3>
-        <p className="mt-2 font-serif text-[14px] italic text-white/70">Arrastra la galería para recorrerlos</p>
+        <p className="mt-2 font-serif text-[14px] text-white/70">Arrastra la galería para recorrerlos</p>
       </motion.div>
       <motion.div
         style={{ opacity: opacidadPie }}

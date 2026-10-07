@@ -167,7 +167,7 @@ export function Hero() {
             <br /> más accesible
           </motion.h1>
           <motion.p
-            className="mx-auto mt-4 max-w-[440px] font-serif text-[18px] italic leading-snug text-white/90 md:text-[19px]"
+            className="mx-auto mt-4 max-w-[440px] font-serif text-[17px] leading-snug text-white/90 md:text-[19px]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.12, ease }}

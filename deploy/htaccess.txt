@@ -1,0 +1,42 @@
+# BLUE GROWTH — configuración para el servidor Apache de GoDaddy (la copia el robot de GitHub como .htaccess)
+# Sube este archivo junto con el resto, a la misma carpeta que index.html (public_html).
+
+# 1) Siempre por HTTPS y sin "www" duplicado de contenido
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+</IfModule>
+
+# 2) Cabeceras de seguridad (las mismas que tenía la versión de Vercel)
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-DNS-Prefetch-Control "off"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always unset X-Powered-By
+</IfModule>
+
+# 3) Velocidad: los archivos de /_next llevan un nombre único por versión, se pueden guardar un año
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2|woff|jpg|jpeg|png|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript image/svg+xml application/json
+</IfModule>
+
+# 4) Página de error propia y sin listado de carpetas
+ErrorDocument 404 /404.html
+Options -Indexes

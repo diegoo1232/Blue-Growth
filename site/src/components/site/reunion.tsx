@@ -94,7 +94,7 @@ export function SeccionReunion() {
   const opacidadFicha = useTransform(salida, (s) => 1 - tramo(s, 0.3, 0.9));
 
   return (
-    <section ref={seccion} id="reunion" className="relative px-6 pb-24 pt-44 max-md:-mt-[35svh] md:pb-28 md:pt-36">
+    <section ref={seccion} id="reunion" className="relative px-6 pb-24 pt-44 max-md:-mt-[calc(35svh-100px)] md:pb-28 md:pt-36">
       {/* La opacidad de la ficha solo se aplica en móvil (< 768 px), y la decide el CSS por el ancho de pantalla: así
           nunca se queda "en móvil" por un dato guardado que no se actualizó al cambiar el tamaño de la ventana. */}
       <motion.div className="max-md:[opacity:var(--ficha-op)]" style={{ "--ficha-op": opacidadFicha } as never}>
@@ -103,11 +103,11 @@ export function SeccionReunion() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 1, ease }}
-        className="relative mx-auto grid max-md:grid-cols-[minmax(0,1fr)] max-w-[1180px] rounded-[22px] bg-noche px-6 pb-10 pt-[300px] shadow-[0_40px_80px_-40px_rgb(20_22_27/0.6)] md:grid-cols-[340px_1fr] md:gap-10 md:px-12 md:py-14"
+        className="relative mx-auto grid max-md:grid-cols-[minmax(0,1fr)] max-w-[1180px] rounded-[22px] bg-noche px-6 pb-10 pt-[230px] shadow-[0_40px_80px_-40px_rgb(20_22_27/0.6)] md:grid-cols-[340px_1fr] md:gap-10 md:px-12 md:py-14"
       >
         <div
           ref={caja}
-          className="absolute -top-40 left-1/2 w-[200px] -translate-x-1/2 md:-top-24 md:left-[40px] md:w-[300px] md:translate-x-0"
+          className="absolute -top-[190px] left-1/2 w-[170px] -translate-x-1/2 md:-top-24 md:left-[40px] md:w-[300px] md:translate-x-0"
         >
           <motion.div style={{ x, scale: escala, rotate: giro, opacity: opacidad }}>
             {/* inclinación en reposo; después flota y se balancea sin parar */}
@@ -122,7 +122,7 @@ export function SeccionReunion() {
                       <Phone slot="reunion-movil">
                         {/* pantalla vacía en azul liso, igual que el otro móvil (en móvil y en escritorio) */}
                         <div className="absolute inset-0 bg-azul" aria-hidden>
-                          {/* mismo globo que la otra tablet (escritorio) */}
+                          {/* mismo globo de antes (escritorio) */}
                           <GloboMapa pausaSi={pausarGlobo} />
                         </div>
                       </Phone>

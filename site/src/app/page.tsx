@@ -1,5 +1,6 @@
 import { EscenaTelefono } from "@/components/site/escena-telefono";
 import { Hero } from "@/components/site/hero";
+import { Pie } from "@/components/site/pie";
 import { SeccionReunion } from "@/components/site/reunion";
 
 // Tres secciones: 1) portada, 2) escena en la que el teléfono crece y su pantalla acaba en azul liso,
@@ -11,6 +12,7 @@ export default function Home() {
       <Hero />
       <EscenaTelefono />
       <SeccionReunion />
+      <Pie />
     </main>
   );
 }

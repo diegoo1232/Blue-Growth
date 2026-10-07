@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Great_Vibes, Lora, Poppins } from "next/font/google";
+import { Great_Vibes, Montserrat, Playfair_Display, Poppins } from "next/font/google";
 import { Providers } from "@/components/site/providers";
 import "./globals.css";
 
@@ -10,11 +10,19 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-// Texto de apoyo: serif cursiva
-const lora = Lora({
-  variable: "--font-lora",
+// Titulares y negritas: Montserrat pesada, la alternativa gratuita más parecida a Milker (sans geométrica y muy gruesa)
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  style: ["italic"],
+  weight: ["600", "700", "800", "900"],
+});
+
+// Texto de apoyo: serif sencilla, algo más ancha y redonda, la más parecida a la tipografía del logotipo
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal"],
 });
 
 // Firma caligráfica enorme y tenue del fondo de la portada
@@ -32,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${poppins.variable} ${lora.variable} ${script.variable} h-full antialiased`}>
+    <html lang="es" className={`${poppins.variable} ${playfair.variable} ${montserrat.variable} ${script.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>
