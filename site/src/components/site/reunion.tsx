@@ -5,9 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { Formulario } from "./contacto";
 import { ENCOGE_SALIDA, GIRO_SALIDA } from "./escena-telefono";
 import { acumular, control3, EVENTO_SINCRONIZAR, intencionMinima, modoSalto, salida3 } from "./estado-telefonos";
+import { GloboMapa } from "./globo-mapa";
 import { Phone } from "./phone";
 
 const ease = [0.22, 1, 0.36, 1] as const;
+// El globo de la ficha se detiene mientras su tablet está fuera
+const pausarGlobo = () => salida3.get() > 0.99;
+
 const tramo = (v: number, a: number, b: number) => Math.min(1, Math.max(0, (v - a) / (b - a)));
 
 // Tercera sección: ficha oscura con el formulario para agendar la reunión y, a un lado, el móvil inclinado que
@@ -117,7 +121,10 @@ export function SeccionReunion() {
                     >
                       <Phone slot="reunion-movil">
                         {/* pantalla vacía en azul liso, igual que el otro móvil (en móvil y en escritorio) */}
-                        <div className="absolute inset-0 bg-azul" aria-hidden />
+                        <div className="absolute inset-0 bg-azul" aria-hidden>
+                          {/* mismo globo que la otra tablet (escritorio) */}
+                          <GloboMapa pausaSi={pausarGlobo} />
+                        </div>
                       </Phone>
                     </div>
                   </div>
