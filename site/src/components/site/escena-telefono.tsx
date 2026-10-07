@@ -15,7 +15,6 @@ import { useEffect, useRef, useState } from "react";
 import { blanqueo, progresoEscena } from "./blanqueo";
 import { acumular, control2, control3, EVENTO_SINCRONIZAR, intencionMinima, modoSalto, salida2 } from "./estado-telefonos";
 import { GaleriaDisenos } from "./galeria-disenos";
-import { Megafono } from "./megafono";
 import { Phone } from "./phone";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -351,9 +350,6 @@ export function EscenaTelefono() {
   // más tarde, así que se desplazan lo mismo
   const desfaseGaleria = useTransform(modoMovil, (m) => (m ? MOVIL_BARRIDO_DESDE - FORM_DESDE : 0));
 
-  // El megáfono (solo escritorio) aparece cuando el barrido deja la pantalla en degradado: el icono "sale" de la tablet
-  const opacidadMegafono = useTransform(avance, (v) => tramo(v, FORM_DESDE + 60, FORM_HASTA));
-
   // pantallas: el formulario sube desde abajo como un barrido de borde difuminado y cubre la app
   const cortina = useTransform([avance, modoMovil], ([v, m]: number[]) => {
     const r = suave(m ? tramo(v, MOVIL_BARRIDO_DESDE, MOVIL_BARRIDO_HASTA) : tramo(v, FORM_DESDE, FORM_HASTA));
@@ -436,7 +432,7 @@ export function EscenaTelefono() {
           className="pointer-events-auto absolute left-1/2 top-1/2 z-10 h-[min(94svh,900px)] w-[calc(min(94svh,900px)*9/19)] -translate-x-1/2 -translate-y-1/2 md:h-[min(76svh,780px)] md:w-[calc(min(76svh,780px)*3/4)]"
         >
           <motion.div style={{ x: xSalida, scale: escalaSalida, rotate: giroSalida, opacity: opacidadSalida }} className="h-full w-full">
-          <Phone slot="hero-movil" className="h-full w-full" adorno={<Megafono opacidad={opacidadMegafono} />}>
+          <Phone slot="hero-movil" className="h-full w-full">
             {/* galería de los últimos diseños, dibujada al tamaño final de la pantalla */}
             <div className="absolute inset-0">
               <GaleriaDisenos avance={avance} desfase={desfaseGaleria} />
@@ -445,7 +441,7 @@ export function EscenaTelefono() {
             {/* pantalla en azul liso: la cubre el barrido de abajo arriba (el formulario ahora está en la sección siguiente) */}
             <motion.div
               style={{ maskImage: cortina, WebkitMaskImage: cortina }}
-              className="absolute inset-0 pantalla-vacia"
+              className="absolute inset-0 bg-azul"
               aria-hidden
             />
           </Phone>
