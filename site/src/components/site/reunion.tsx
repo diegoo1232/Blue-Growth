@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Formulario } from "./contacto";
 import { ENCOGE_SALIDA, GIRO_SALIDA } from "./escena-telefono";
 import { acumular, control3, EVENTO_SINCRONIZAR, intencionMinima, modoSalto, salida3 } from "./estado-telefonos";
+import { Megafono } from "./megafono";
 import { Phone } from "./phone";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -115,9 +116,9 @@ export function SeccionReunion() {
                       className={medida ? "absolute left-0 top-0" : "w-full"}
                       style={medida ? { width: medida.base, transform: `scale(${medida.escala})`, transformOrigin: "top left" } : undefined}
                     >
-                      <Phone slot="reunion-movil">
+                      <Phone slot="reunion-movil" adorno={<Megafono />}>
                         {/* pantalla vacía en azul liso, igual que el otro móvil (en móvil y en escritorio) */}
-                        <div className="absolute inset-0 bg-azul" aria-hidden />
+                        <div className="absolute inset-0 pantalla-vacia" aria-hidden />
                       </Phone>
                     </div>
                   </div>

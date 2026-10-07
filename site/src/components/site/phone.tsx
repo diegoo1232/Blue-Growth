@@ -22,10 +22,13 @@ export function Phone({
   children,
   className = "",
   slot,
+  adorno,
 }: {
   children: React.ReactNode;
   className?: string;
   slot: string;
+  /** Algo que va fuera de las capas que recortan la pantalla y puede sobresalir del marco (p. ej. el megáfono). */
+  adorno?: React.ReactNode;
 }) {
   return (
     <div
@@ -48,6 +51,7 @@ export function Phone({
         {/* tablet: cámara frontal arriba en el centro del marco */}
         <span className="absolute left-1/2 top-[3px] z-30 hidden size-[5px] -translate-x-1/2 rounded-full bg-[#2c2f38] md:block" aria-hidden />
       </div>
+      {adorno}
     </div>
   );
 }
