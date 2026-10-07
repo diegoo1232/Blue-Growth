@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { motion, useTransform, type MotionValue } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Solo en el navegador: el anillo calcula posiciones con decimales y el servidor y el navegador no los escriben igual
 const CircularCarousel = dynamic(() => import("./CircularCarousel"), { ssr: false });
@@ -54,12 +54,23 @@ const tramo = (v: number, a: number, b: number) => Math.min(1, Math.max(0, (v - 
 // `desfase` (px) retrasa ambos desvanecimientos cuando el barrido ocurre más tarde (móvil).
 export function GaleriaDisenos({ avance, desfase }: { avance: MotionValue<number>; desfase?: MotionValue<number> }) {
   const [activo, setActivo] = useState(0);
+  // Pantalla de la tablet (escritorio): más ancha que la del móvil, así que las tarjetas se escalan en proporción.
+  // La del móvil (≈ 342 px) se queda como siempre. Se mide el ancho de maquetación (no afectado por la escala).
+  const caja = useRef<HTMLDivElement>(null);
+  const [ancho, setAncho] = useState(0);
+  useEffect(() => {
+    const medir = () => setAncho(caja.current?.offsetWidth ?? 0);
+    medir();
+    window.addEventListener("resize", medir);
+    return () => window.removeEventListener("resize", medir);
+  }, []);
+  const esTablet = ancho >= 460;
   const actual = DISENOS[activo] ?? DISENOS[0];
   const opacidadTitulo = useTransform(desfase ? [avance, desfase] : [avance], ([v, d = 0]: number[]) => 1 - tramo(v - d, 15, 55));
   const opacidadPie = useTransform(desfase ? [avance, desfase] : [avance], ([v, d = 0]: number[]) => 1 - tramo(v - d, -85, -40));
 
   return (
-    <div className="absolute inset-0 overflow-hidden text-white">
+    <div ref={caja} className="absolute inset-0 overflow-hidden text-white">
       {/* Anillo grande e inclinado en diagonal. Su contenedor es más ancho que la pantalla y la propia
           pantalla del teléfono recorta lo que sobresale. */}
       <div
@@ -70,10 +81,10 @@ export function GaleriaDisenos({ avance, desfase }: { avance: MotionValue<number
           items={DISENOS}
           preset="cylinder"
           intro="rise"
-          cardWidth={330}
+          cardWidth={esTablet ? Math.round(ancho * 0.8) : 330}
           aspectRatio={1.3}
           tilt={-14}
-          gap={26}
+          gap={esTablet ? Math.round(ancho * 0.062) : 26}
           autoplay="drift"
           speed={14}
           pauseOnHover={false}

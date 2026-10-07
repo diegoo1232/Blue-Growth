@@ -99,18 +99,18 @@ export function SeccionReunion() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 1, ease }}
-        className="relative mx-auto grid max-md:grid-cols-[minmax(0,1fr)] max-w-[1180px] rounded-[22px] bg-noche px-6 pb-10 pt-[300px] shadow-[0_40px_80px_-40px_rgb(20_22_27/0.6)] md:grid-cols-[300px_1fr] md:gap-10 md:px-12 md:py-14"
+        className="relative mx-auto grid max-md:grid-cols-[minmax(0,1fr)] max-w-[1180px] rounded-[22px] bg-noche px-6 pb-10 pt-[300px] shadow-[0_40px_80px_-40px_rgb(20_22_27/0.6)] md:grid-cols-[340px_1fr] md:gap-10 md:px-12 md:py-14"
       >
         <div
           ref={caja}
-          className="absolute -top-40 left-1/2 w-[200px] -translate-x-1/2 md:-top-24 md:left-[40px] md:w-[230px] md:translate-x-0"
+          className="absolute -top-40 left-1/2 w-[200px] -translate-x-1/2 md:-top-24 md:left-[40px] md:w-[300px] md:translate-x-0"
         >
           <motion.div style={{ x, scale: escala, rotate: giro, opacity: opacidad }}>
             {/* inclinación en reposo; después flota y se balancea sin parar */}
             <div style={{ rotate: "-6deg" }}>
               <div className="flotar-suave">
                 <div className="balancear">
-                  <div ref={marco} className="relative aspect-[9/19] w-full">
+                  <div ref={marco} className="relative aspect-[9/19] w-full md:aspect-[3/4]">
                     <div
                       className={medida ? "absolute left-0 top-0" : "w-full"}
                       style={medida ? { width: medida.base, transform: `scale(${medida.escala})`, transformOrigin: "top left" } : undefined}

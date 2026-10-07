@@ -14,7 +14,10 @@ import {
   Sun,
 } from "lucide-react";
 
-// Carcasa de móvil dibujada con CSS. La pantalla se pasa como hijo.
+// Carcasa de dispositivo dibujada con CSS. La pantalla se pasa como hijo.
+// En pantallas pequeñas (< 768 px) es un MÓVIL (9:19, isla arriba); desde 768 px (escritorio) es una TABLET vertical
+// (3:4, marco más fino, esquinas más suaves y cámara arriba en el centro). Es UNA sola pieza con dos aspectos, así
+// todas las tablets de la página son idénticas y no se duplica el contenido de la pantalla.
 export function Phone({
   children,
   className = "",
@@ -28,20 +31,22 @@ export function Phone({
     <div
       data-slot={slot}
       data-slot-type="app-screen"
-      className={`relative aspect-[9/19] rounded-[2.6rem] bg-gradient-to-b from-[#c9ccd3] via-[#8d929c] to-[#c9ccd3] p-[3px] shadow-[0_40px_80px_-20px_rgb(20_22_27/0.45),0_18px_30px_-12px_rgb(20_22_27/0.25)] ${className}`}
+      className={`relative aspect-[9/19] rounded-[2.6rem] md:aspect-[3/4] md:rounded-[1.9rem] bg-gradient-to-b from-[#c9ccd3] via-[#8d929c] to-[#c9ccd3] p-[3px] shadow-[0_40px_80px_-20px_rgb(20_22_27/0.45),0_18px_30px_-12px_rgb(20_22_27/0.25)] ${className}`}
     >
-      <div className="relative h-full w-full overflow-hidden rounded-[2.45rem] bg-[#0e0f13] p-[7px]">
-        <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-[#1a1c23] text-white">
+      <div className="relative h-full w-full overflow-hidden rounded-[2.45rem] bg-[#0e0f13] p-[7px] md:rounded-[1.75rem] md:p-[10px]">
+        <div className="relative h-full w-full overflow-hidden rounded-[2rem] bg-[#1a1c23] text-white md:rounded-[1.1rem]">
           {/* isla */}
-          <div className="absolute left-1/2 top-2 z-10 h-[18px] w-[34%] -translate-x-1/2 rounded-full bg-black" />
+          <div className="absolute left-1/2 top-2 z-10 h-[18px] w-[34%] -translate-x-1/2 rounded-full bg-black md:hidden" />
           {children}
         </div>
         {/* Aro del borde por ENCIMA de la pantalla: tapa la unión entre la pantalla y el marco negro. Sin él, al
             escalar el teléfono con decimales asomaba un hilo claro del fondo entre ambos. Solapa 1 px a propósito. */}
         <div
-          className="pointer-events-none absolute inset-0 z-20 rounded-[2.45rem] border-[8px] border-[#0e0f13]"
+          className="pointer-events-none absolute inset-0 z-20 rounded-[2.45rem] border-[8px] border-[#0e0f13] md:rounded-[1.75rem] md:border-[11px]"
           aria-hidden
         />
+        {/* tablet: cámara frontal arriba en el centro del marco */}
+        <span className="absolute left-1/2 top-[3px] z-30 hidden size-[5px] -translate-x-1/2 rounded-full bg-[#2c2f38] md:block" aria-hidden />
       </div>
     </div>
   );

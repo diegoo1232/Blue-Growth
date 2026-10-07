@@ -25,7 +25,7 @@ const EMPUJE_SCROLL = 900; // píxeles extra que añade recorrer la escena con e
 
 // Tamaño del teléfono al principio (en la portada), en píxeles de ancho
 const ANCHO_INICIAL_MOVIL = 190;
-const ANCHO_INICIAL_ESCRITORIO = 250;
+const ANCHO_INICIAL_ESCRITORIO = 330; // tablet (en móvil, el teléfono de 190 px)
 
 // Reparto de la transición, en píxeles de scroll medidos desde el momento en que la escena se fija
 // (0 = justo al fijarse; negativo = un poco antes). El teléfono empieza a crecer ya antes de fijarse
@@ -93,10 +93,10 @@ const sale = (t: number) => 1 - Math.pow(1 - t, 3);
 
 // Etiquetas alrededor del teléfono: posición respecto al centro de la escena
 const chips = [
-  { icon: Palette, text: ["Diseño", "a medida"], lado: 1, pos: "left-[calc(50%+70px)] top-[calc(50%-165px)] md:left-[calc(50%+150px)] md:top-[calc(50%-216px)]", d: 1.0, f: "-1.4s" },
-  { icon: Smartphone, text: ["Adaptada", "a móvil"], lado: -1, pos: "right-[calc(50%+60px)] top-[calc(50%-80px)] md:right-[calc(50%+150px)] md:top-[calc(50%-108px)]", d: 1.1, f: "0s" },
-  { icon: Zap, text: ["Carga", "ultrarrápida"], lado: 1, pos: "left-[calc(50%+80px)] top-[calc(50%-28px)] md:left-[calc(50%+210px)] md:top-[calc(50%-36px)]", d: 1.2, f: "-3.5s" },
-  { icon: Accessibility, text: ["Accesible", "para todos"], lado: -1, pos: "right-[calc(50%+70px)] top-[calc(50%+28px)] md:right-[calc(50%+250px)] md:top-[calc(50%+36px)]", d: 1.3, f: "-2.6s" },
+  { icon: Palette, text: ["Diseño", "a medida"], lado: 1, pos: "left-[calc(50%+70px)] top-[calc(50%-165px)] md:left-[calc(50%+200px)] md:top-[calc(50%-216px)]", d: 1.0, f: "-1.4s" },
+  { icon: Smartphone, text: ["Adaptada", "a móvil"], lado: -1, pos: "right-[calc(50%+60px)] top-[calc(50%-80px)] md:right-[calc(50%+200px)] md:top-[calc(50%-108px)]", d: 1.1, f: "0s" },
+  { icon: Zap, text: ["Carga", "ultrarrápida"], lado: 1, pos: "left-[calc(50%+80px)] top-[calc(50%-28px)] md:left-[calc(50%+260px)] md:top-[calc(50%-36px)]", d: 1.2, f: "-3.5s" },
+  { icon: Accessibility, text: ["Accesible", "para todos"], lado: -1, pos: "right-[calc(50%+70px)] top-[calc(50%+28px)] md:right-[calc(50%+300px)] md:top-[calc(50%+36px)]", d: 1.3, f: "-2.6s" },
 ];
 
 function Etiqueta({
@@ -429,7 +429,7 @@ export function EscenaTelefono() {
         <motion.div
           ref={telefono}
           style={{ scale: escala, x: xMover, y: yTotal }}
-          className="pointer-events-auto absolute left-1/2 top-1/2 z-10 h-[min(94svh,900px)] w-[calc(min(94svh,900px)*9/19)] -translate-x-1/2 -translate-y-1/2"
+          className="pointer-events-auto absolute left-1/2 top-1/2 z-10 h-[min(94svh,900px)] w-[calc(min(94svh,900px)*9/19)] -translate-x-1/2 -translate-y-1/2 md:h-[min(76svh,780px)] md:w-[calc(min(76svh,780px)*3/4)]"
         >
           <motion.div style={{ x: xSalida, scale: escalaSalida, rotate: giroSalida, opacity: opacidadSalida }} className="h-full w-full">
           <Phone slot="hero-movil" className="h-full w-full">
