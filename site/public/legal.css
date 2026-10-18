@@ -1,0 +1,80 @@
+/* Módulo legal: ficha superpuesta, enlaces del pie y casilla de consentimiento.
+   Usa colores propios neutros para verse bien sobre cualquier diseño. */
+.lg-abierta, .lg-abierta body { overflow: hidden; }
+
+.lg-capa {
+  position: fixed; inset: 0; z-index: 2147483000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  background: rgba(10, 12, 20, .62);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  animation: lg-fundido .2s ease-out;
+}
+.lg-capa[hidden] { display: none; }
+.lg-ficha {
+  position: relative;
+  width: min(720px, 100%); max-height: min(86vh, 900px);
+  display: flex; flex-direction: column;
+  background: #fff; color: #1d1f24;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+  font: 400 15px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-align: left;
+  animation: lg-sube .24s cubic-bezier(.23, 1, .32, 1);
+}
+.lg-titulo {
+  margin: 0; padding: 26px 64px 14px 28px;
+  font: 700 22px/1.25 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #111;
+  border-bottom: 1px solid #ececec;
+}
+.lg-cuerpo { overflow-y: auto; padding: 18px 28px 28px; overscroll-behavior: contain; }
+.lg-cuerpo h3 { margin: 20px 0 6px; font-size: 15px; font-weight: 700; color: #111; }
+.lg-cuerpo p { margin: 0 0 10px; color: #3b3f47; }
+.lg-cuerpo a { color: #2453d6; text-decoration: underline; }
+.lg-fecha { font-size: 13px; color: #6b7080 !important; }
+.lg-cerrar {
+  position: absolute; top: 14px; right: 14px;
+  width: 40px; height: 40px; border: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #f1f2f5; color: #111; font-size: 26px; line-height: 1; cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease;
+}
+.lg-cerrar:hover { background: #e2e4ea; }
+.lg-cerrar:active { transform: scale(.94); }
+.lg-cerrar:focus-visible { outline: 3px solid #2453d6; outline-offset: 2px; }
+.lg-acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.lg-btn {
+  display: inline-flex; align-items: center; padding: 11px 20px; border-radius: 999px;
+  background: #111; color: #fff !important; text-decoration: none !important; font-weight: 600; font-size: 14px;
+}
+.lg-btn:hover { background: #2b2d33; }
+
+/* enlaces del pie */
+.lg-barra {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 10px;
+  width: 100%; margin-top: 18px; padding: 12px 0 4px;
+  font: 400 12.5px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  opacity: .85;
+}
+.lg-barra a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.lg-barra a:hover { opacity: .75; }
+.lg-barra--suelta { padding: 16px; margin: 0; background: #111; color: #e8e8e8; }
+
+/* consentimiento */
+.lg-consent {
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: 6px 10px;
+  margin: 10px 0 14px; font-size: 13.5px; line-height: 1.45; text-align: left;
+}
+.lg-consent input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: currentColor; cursor: pointer; }
+.lg-consent label { flex: 1; min-width: 0; cursor: pointer; }
+.lg-consent a { color: inherit; text-decoration: underline; }
+.lg-aviso { width: 100%; margin: 0; color: #d0342c; font-weight: 600; font-size: 13px; }
+.lg-aviso[hidden] { display: none; }
+
+@keyframes lg-fundido { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lg-sube { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (max-width: 560px) {
+  .lg-ficha { max-height: 92vh; border-radius: 16px; }
+  .lg-titulo { padding: 22px 60px 12px 20px; font-size: 19px; }
+  .lg-cuerpo { padding: 14px 20px 22px; }
+}

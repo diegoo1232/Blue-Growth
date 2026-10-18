@@ -38,6 +38,11 @@ jobs:
         working-directory: site
         run: npm ci
 
+      - name: Revisar vulnerabilidades de las librerías (A06, informativo)
+        working-directory: site
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
+
       - name: Construir la web (EXPORTAR=1 npm run build)
         working-directory: site
         env:

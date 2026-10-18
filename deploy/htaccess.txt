@@ -9,6 +9,12 @@
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
 </IfModule>
 
+# 1b) Solo se aceptan métodos normales (A05): cualquier otro (TRACE, PUT, DELETE…) recibe 405
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_METHOD} !^(GET|HEAD|POST|OPTIONS)$ [NC]
+  RewriteRule .* - [R=405,L]
+</IfModule>
+
 # 2) Cabeceras de seguridad (las mismas que tenía la versión de Vercel)
 <IfModule mod_headers.c>
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
@@ -40,3 +46,13 @@
 # 4) Página de error propia y sin listado de carpetas
 ErrorDocument 404 /404.html
 Options -Indexes
+
+# 5) Archivos ocultos y de configuración nunca se sirven (A01/A05); solo se permite /.well-known
+<IfModule mod_rewrite.c>
+  RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
+</IfModule>
+<FilesMatch "\.(env|ini|log|bak|sql|sh|yml|yaml|json\.bak|map|md|lock|config)$">
+  Require all denied
+</FilesMatch>
+ServerSignature Off
+Options -MultiViews

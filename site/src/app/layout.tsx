@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Great_Vibes, Montserrat, Playfair_Display, Poppins } from "next/font/google";
 import { Providers } from "@/components/site/providers";
 import "./globals.css";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="es" className={`${poppins.variable} ${playfair.variable} ${montserrat.variable} ${script.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
+        <Script src="/legal.js" strategy="afterInteractive" data-marca="BLUE GROWTH" data-envio="whatsapp" data-precios="si" />
       </body>
     </html>
   );
