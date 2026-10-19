@@ -417,3 +417,15 @@ Before showing to the user:
 - [ ] All images have `alt` text
 - [ ] Footer credit present: "Built with Claude Web Builder by Tododeia"
 - [ ] Keyboard navigation works (Tab through the page)
+
+
+## Seguridad (OWASP Top 10) — norma fija de Diego
+Aplicar siempre las normas de `F:\CLAUDE\CLAUDE MAQUETACION PAGINAS WEB\Estructuracion de la pagina\(aplicar al inicio del proyecto) Seguridad de la pagina.txt`.
+Estado de este proyecto (18/10/2026) y reglas que no se pueden romper:
+- Cabeceras de seguridad en `deploy/htaccess.txt` (GoDaddy) y `next.config.ts`: CSP, HSTS, nosniff, Referrer, Permissions, COOP/CORP, anti-clickjacking.
+- Servidor: solo GET/HEAD/POST/OPTIONS (resto = 405), archivos ocultos y de configuración bloqueados (403), sin listado de carpetas.
+- Librerías: `npm audit --omit=dev` debe dar 0; herramientas como `shadcn` van en devDependencies. El robot de GitHub lo revisa en cada publicación.
+- Nada interno publicado (documentos de trabajo, claves, `.env`); las claves de GoDaddy viven solo en los Secrets de GitHub.
+- Formularios: validar y limpiar datos, antirrobot (campo trampa + tiempo mínimo + espera). Si algún día hay servidor, validar OTRA VEZ allí.
+- No usar `eval`, `innerHTML` ni `dangerouslySetInnerHTML` con datos del usuario.
+- Tras cualquier cambio de configuración: comprobar en vivo con `curl -I` las cabeceras y que `/.htaccess` da 403.
